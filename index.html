@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Writer</title>
+<style>
+html, input, button, p {
+font-family: Cursive;
+text-align: center;
+}
+input, button {
+margin: 0.25em;
+border-radius: 100px;
+border: 2px solid #b3b3b3;
+}
+hr {
+height: 2.5px;
+border-radius: 100px;
+background-color: black;
+border: 0px;
+}
+#prompt {
+resize: both;
+}
+</style>
+</head>
+<body>
+
+<h1>AI Writer</h1>
+
+<input id="apikey" placeholder="API Key" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"><br>
+<input id="prompt" style="resize: both;" placeholder="Prompt" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"><br>
+<button onclick="wholeThing()">Let's Write!</button>
+<hr>
+<div id="01">Generated text will appear here.</div>
+
+<script src="https://cdnjs.deepai.org/deepai.min.js"></script>
+<script>
+async function generateText() {
+var apikey = document.getElementById("apikey").value;
+var prompt = document.getElementById("prompt").value;
+var result = await deepai.callStandardApi("text-generator", {
+  text: prompt,
+});
+
+await deepai.renderResultIntoElement(
+  result,
+  document.getElementById("01"),
+);
+};
+
+function fixText() {
+var p = document.getElementById("01");
+p.innerHTML = "Writing...";
+};
+
+
+function wholeThing () {
+fixText();
+generateText()
+};
+</script>
+
+</body>
+</html>
